@@ -3,11 +3,12 @@ import { HTTP_STATUS } from "~/constants/httpStatus";
 import { PRODUCTS_MESSAGES } from "~/constants/messages";
 import productRepository from "~/database/productRepository";
 import { ErrorWithStatus } from "~/models/Errors";
+import productService from "~/services/products.services";
 import pick from "~/utils/pick";
 
 async function getProducts(ctx: Context) {
   const { limit, sort } = ctx.query;
-  const products = productRepository.getAll(Number(limit), sort as string);
+  const products = await productService.getProducts({ limit, sort });
   ctx.body = {
     message: PRODUCTS_MESSAGES.GET_PRODUCTS_SUCCESSFULLY,
     data: products,
@@ -16,7 +17,7 @@ async function getProducts(ctx: Context) {
 
 async function getProduct(ctx: Context) {
   const { id } = ctx.params;
-  const getCurrentProduct = productRepository.getOne(id);
+  const getCurrentProduct = await productService.getOne(id);
   if (getCurrentProduct) {
     return (ctx.body = {
       message: PRODUCTS_MESSAGES.GET_PRODUCT_SUCCESSFULLY,
@@ -30,8 +31,8 @@ async function getProduct(ctx: Context) {
 }
 
 async function save(ctx: Context) {
-  const postData = ctx.request.body;
-  const data = productRepository.add(
+  const postData = ctx.req.body;
+  const data = await productService.addProduct(
     pick(postData, [
       "name",
       "price",
@@ -50,8 +51,11 @@ async function save(ctx: Context) {
 
 async function updateProduct(ctx: Context) {
   const { id } = ctx.params;
-  const data = ctx.request.body;
-  const updatedProduct = productRepository.updateOne(id, pick(data, ctx.pick));
+  const data = ctx.req.body;
+  const updatedProduct = await productService.updateOne(
+    id,
+    pick(data, ctx.pick)
+  );
   if (updatedProduct) {
     return (ctx.body = {
       message: PRODUCTS_MESSAGES.UPDATE_PRODUCT_SUCCESSFULLY,
@@ -66,7 +70,7 @@ async function updateProduct(ctx: Context) {
 
 async function deleteProduct(ctx: Context) {
   const { id } = ctx.params;
-  const deletedProduct = productRepository.deleteOne(id);
+  const deletedProduct = await productService.deleteOne(id);
   if (deletedProduct) {
     return (ctx.body = {
       message: PRODUCTS_MESSAGES.DELETE_PRODUCT_SUCCESSFULLY,

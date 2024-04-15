@@ -11,7 +11,7 @@ export async function paginationMiddleware(
   next: Next
 ) {
   try {
-    const query = ctx.request.query;
+    const query = ctx.query;
     let schema = object({
       limit: number().min(
         1,

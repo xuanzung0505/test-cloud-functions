@@ -11,6 +11,7 @@ export const defaultErrorHandler = async (
     await next();
   } catch (err: any) {
     // will only respond with JSON
+    console.log(err);
     if (isErrorWithStatus(err)) {
       ctx.status = err.status;
       ctx.body = {
@@ -18,7 +19,6 @@ export const defaultErrorHandler = async (
         error: err.error,
       };
     } else {
-      console.log(err);
       ctx.response.status = HTTP_STATUS.INTERNAL_SERVER_ERROR;
       ctx.body = {
         message: COMMON_MESSAGES.INTERNAL_SERVER_ERROR,

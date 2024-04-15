@@ -3,17 +3,17 @@
   "scripts": {
     "build": "rimraf ./lib && tsc && tsc-alias && npm run copy-files",
     "build:watch": "tsc --watch",
-    "serve": "npm run build && firebase emulators:start --only functions",
+    "serve": "npm run build && firebase emulators:start",
     "shell": "npm run build && firebase functions:shell",
     "start": "npm run shell",
     "deploy": "firebase deploy --only functions",
     "logs": "firebase functions:log",
-    "copy-files": "copyfiles -u 1 src/**/*.html src/**/*.ejs lib/"
+    "copy-files": "copyfiles -u 1 src/**/*.html src/**/*.ejs lib/src"
   },
   "engines": {
     "node": "20"
   },
-  "main": "lib/index.js",
+  "main": "lib/src/index.js",
   "dependencies": {
     "@faker-js/faker": "^8.4.1",
     "@koa/bodyparser": "^5.1.1",
@@ -21,7 +21,7 @@
     "@types/koa-bodyparser": "^4.3.12",
     "ejs": "^3.1.9",
     "ejs-lint": "^2.0.0",
-    "firebase-admin": "^11.8.0",
+    "firebase-admin": "^11.11.1",
     "firebase-functions": "^4.3.1",
     "koa": "^2.15.2",
     "koa-body": "^6.0.1",

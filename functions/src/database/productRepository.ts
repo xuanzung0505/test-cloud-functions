@@ -19,7 +19,7 @@ class ProductRepository {
         (a, b) => Date.parse(b.created_at) - Date.parse(a.created_at)
       );
     }
-    if (limit !== undefined) {
+    if (Number.isFinite(limit)) {
       return result.slice(0, limit);
     }
     return result;

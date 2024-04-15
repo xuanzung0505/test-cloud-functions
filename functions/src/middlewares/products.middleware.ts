@@ -6,7 +6,7 @@ import { HTTP_STATUS } from "../constants/httpStatus";
 
 export async function productAddMiddleware(ctx: Context, next: Next) {
   try {
-    const postData = ctx.request.body;
+    const postData = ctx.req.body;
     let schema = object({
       name: string().required(PRODUCTS_MESSAGES.PRODUCT_NAME_IS_REQUIRED),
       price: number().required(PRODUCTS_MESSAGES.PRODUCT_PRICE_IS_REQUIRED),

@@ -13,8 +13,9 @@ export function generateProducts() {
       description: faker.commerce.productDescription(),
       product: faker.commerce.productMaterial(),
       color: faker.color.human(),
-      createdAt: faker.date.anytime(),
       image: faker.image.url(),
+      created_at: faker.date.anytime(),
+      updated_at: faker.date.anytime(),
     };
     const updatedProducts = [...data.data, newProduct];
     fs.writeFileSync(

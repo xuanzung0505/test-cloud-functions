@@ -12,7 +12,7 @@ const render = views(__dirname + "/views", {
     ejs: "ejs",
   },
 });
-app.use(bodyParser());
+// app.use(bodyParser());
 // Must be used before any router is used
 app.use(render);
 app.use(defaultErrorHandler);
